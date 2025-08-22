@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #__next {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+#nextjs__container,
+[data-nextjs-toast],
+[aria-label="Next.js Toast"],
+div[class*="nextjs-toast"],
+div[style*="bottom: 0px"][style*="left: 0px"] {
+  display: none !important;
+}
+
