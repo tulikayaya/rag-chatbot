@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
-from langchain_community.vectorstores import Pinecone
+#from langchain_community.vectorstores import Pinecone
+from langchain_pinecone import Pinecone as PineconeVectorStore
 from langchain_community.embeddings import OpenAIEmbeddings
 #from pinecone import Pinecone as PineconeClient
 from pinecone import Pinecone
@@ -28,11 +29,17 @@ def get_retriever(top_k: int = 10):
     Returns a retriever object that can fetch top-k similar chunks from Pinecone
     based on semantic similarity using OpenAI embeddings.
     """
-    vectorstore = Pinecone(
-        index=index,
-        embedding=embedding_model,
-        text_key="text"
+#    vectorstore = Pinecone(
+#        index=index,
+#        embedding=embedding_model,
+#        text_key="text"
+#    )
+
+    vectorstore = PineconeVectorStore.from_existing_index(
+        index_name=PINECONE_INDEX,
+        embedding=embeddings
     )
+    
     retriever = vectorstore.as_retriever(search_kwargs={"k": top_k})
     return retriever
 
