@@ -2,8 +2,8 @@ import os
 from dotenv import load_dotenv
 from langchain_community.vectorstores import Pinecone
 from langchain_community.embeddings import OpenAIEmbeddings
-#from pinecone import Pinecone as PineconeClient
-from pinecone import Pinecone
+from pinecone import Pinecone as PineconeClient
+#from pinecone import Pinecone
 
 # Step 1: Load environment variables
 load_dotenv()
