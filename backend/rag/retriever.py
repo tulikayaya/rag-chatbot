@@ -14,7 +14,7 @@ PINECONE_INDEX = os.getenv("PINECONE_INDEX_NAME")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 # Step 2: Initialize embedding model (must match the one used in embedder.py)
-embedding_model = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
+embeddings = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
 
 # Step 3: Connect to Pinecone client and get index handle
 #pc = PineconeClient(api_key=PINECONE_API_KEY)
@@ -39,7 +39,7 @@ def get_retriever(top_k: int = 10):
         index_name=PINECONE_INDEX,
         embedding=embeddings
     )
-    
+
     retriever = vectorstore.as_retriever(search_kwargs={"k": top_k})
     return retriever
 
