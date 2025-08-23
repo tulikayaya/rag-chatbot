@@ -2,8 +2,8 @@ import os
 from dotenv import load_dotenv
 from langchain_community.vectorstores import Pinecone
 from langchain_community.embeddings import OpenAIEmbeddings
-from pinecone import Pinecone as PineconeClient
-#from pinecone import Pinecone
+#from pinecone import Pinecone as PineconeClient
+from pinecone import Pinecone
 
 # Step 1: Load environment variables
 load_dotenv()
@@ -16,7 +16,10 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 embedding_model = OpenAIEmbeddings(openai_api_key=OPENAI_API_KEY)
 
 # Step 3: Connect to Pinecone client and get index handle
-pc = PineconeClient(api_key=PINECONE_API_KEY)
+#pc = PineconeClient(api_key=PINECONE_API_KEY)
+#index = pc.Index(PINECONE_INDEX)
+
+pc = Pinecone(api_key=PINECONE_API_KEY)
 index = pc.Index(PINECONE_INDEX)
 
 # Step 4: Set up retriever from LangChain's Pinecone wrapper
