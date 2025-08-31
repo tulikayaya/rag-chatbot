@@ -27,18 +27,19 @@ Designed for research coordinators, clinical trial staff, and administrative tea
 ## RAG Pipeline
 
 ### 1. Preprocessing
-PDF documents were parsed and split into overlapping chunks using `RecursiveCharacterTextSplitter`, ensuring semantic coherence and retrievability.
+Documents are preprocessed using a **custom recursive chunking strategy** that balances semantic boundaries and chunk length, ensuring each chunk is rich enough for standalone retrieval while avoiding token overflows.
 
 ### 2. Embedding
-Each chunk was embedded via OpenAI’s `text-embedding-3-small` model.
+Each chunk is embedded via OpenAI’s `text-embedding-3-small` model.
 
 ### 3. Vector Storage
-Embeddings and chunk metadata (e.g. source, page number) were stored in Pinecone for fast cosine similarity retrieval.
+Embeddings and custom chunk metadata (e.g., `source`, `page_number`, `chunk_index`, etc.) are stored in Pinecone for efficient vector retrieval using cosine similarity.
 
 ### 4. Retrieval-Augmented QA
-- A user query triggers a Pinecone search for the most relevant chunks.
-- Retrieved chunks and the user question are passed to GPT-4 via LangChain.
-- The chatbot generates a grounded, reference-based response.
+- A user query triggers semantic search in Pinecone.
+- Top-matching document chunks are fetched.
+- The user query + retrieved chunks are passed to GPT-4 via LangChain.
+- GPT-4 generates a grounded answer with supporting citations.
 
 ---
 
@@ -60,6 +61,10 @@ pip install -r requirements.txt
 
 # Set environment variables
 cp .env.example .env  # then edit .env with your keys
+
+# Run the FastAPI server
+uvicorn main:app --reload
+
 
 # Run the FastAPI server
 uvicorn main:app --reload
